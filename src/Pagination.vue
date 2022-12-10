@@ -15,6 +15,7 @@ export default {
       
     };
   },
+  emits : ["pageChange"],
   methods: {
       onBtnPrev () {
         this.$emit("pageChange", this.currentPage - 1);

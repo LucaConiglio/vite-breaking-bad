@@ -75,6 +75,7 @@ export default {
 
     }
   },
+  emits: ["search"],
   computed : {
     speciesList () {
       const toReturn = [];
