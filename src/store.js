@@ -7,12 +7,19 @@ export const store = reactive ({
   infoList :[],
   loading : false,
   currentPage: 1,
-
+  activeFilters: null,
 })
 
 export function fetchImage() {
     store.loading = true;
-    axios.get("https://rickandmortyapi.com/api/character" + "?page=" + store.currentPage)
+    axios.get("https://rickandmortyapi.com/api/character", {
+      params: {
+        page: store.currentPage,
+        ...store.activeFilters
+      }
+    }
+    
+    )
     .then((resp) => {
       
   

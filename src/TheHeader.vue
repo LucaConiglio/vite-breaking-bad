@@ -9,13 +9,13 @@
             <div class="col-sm-6">
               <div class="mb-3">
                 <label class="text-white">Nome</label>
-                <input type="text" class="form-control" name="name">
+                <input type="text" class="form-control" name="name" v-model="filters.name">
               </div>
             </div>
             <div class="col-sm-6">
               <div class="mb-3">
                 <label class="text-white">Stato</label>
-                <input type="text" class="form-control" name="status" >
+                <input type="text" class="form-control" name="status" v-model="filters.status">
               </div>
             </div>
           </div>
@@ -23,25 +23,25 @@
             <div class="col-sm-4">
               <div class="mb-3">
                 <label class="text-white">Specie</label>
-                <input type="text" class="form-control" name="species" >
+                <input type="text" class="form-control" name="species" v-model="filters.species">
               </div>
             </div>
             <div class="col-sm-4">
               <div class="mb-3">
                 <label class="text-white">Tipo</label>
-                <input type="text" class="form-control" name="type" >
+                <input type="text" class="form-control" name="type" v-model="filters.type">
               </div>
             </div>
             <div class="col-sm-4">
               <div class="mb-3">
                 <label class="text-white">Genere</label>
-                <input type="text" class="form-control" name="gender">
+                <input type="text" class="form-control" name="gender" v-model="filters.gender">
               </div>
             </div>
             </div>
             <div class="d-flex gap-3 justify-content-center">
-              <button class="btn btn-secondary" type="reset">Reset filtri</button>
-              <button class="btn btn-info">Cerca</button>
+              <button class="btn btn-secondary" type="reset" @click="resetFilters">Reset filtri</button>
+              <button class="btn btn-info" @click="onSearchClick">Cerca</button>
             </div>
         </form>
       </div>
@@ -63,7 +63,15 @@ import { store, fetchImage } from './store';
 export default {
   data() {
     return {
-      store
+      store,
+      filters: {
+        name: "",
+        status: "",
+        species: "",
+        type: "",
+        gender: ""
+      }
+
 
     }
   },
@@ -79,7 +87,23 @@ export default {
       });
 
       return toReturn;
-    }
+    },
+
+    onSearchClick () {
+      this.$emit("search", {...this.filters});
+    },
+    resetFilters() {
+      this.store.activeFilters = null
+      fetchImage();
+
+      this.filters = {
+        name: "",
+        status: "",
+        species: "",
+        type: "",
+        gender: ""
+      }
+    },
   }
 }
 </script>

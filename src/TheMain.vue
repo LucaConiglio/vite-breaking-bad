@@ -1,6 +1,6 @@
 <template>
   <section class="my-section">
-    <TheHeader></TheHeader>
+    <TheHeader @search="onSearch"></TheHeader>
       <div class="container">
        <Pagination :currentPage="store.currentPage" @pageChange="onPageChange"></Pagination>
         <div class="row pt-5 g-5">
@@ -39,7 +39,13 @@ export default {
         store.currentPage = newPage;
 
         fetchImage();
-      }
+      },
+
+      onSearch(filter) {
+        this.store.activeFilters = filter;
+
+        fetchImage()
+      },
     },
     
 }
